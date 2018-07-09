@@ -1,0 +1,12 @@
+{
+	"step1"        : "安装node",
+    "detailed"     : "下载node,32位-地址: https://nodejs.org/dist/v4.4.3/node-v4.4.3-x86.msi;64位-地址: https://nodejs.org/dist/v4.4.3/node-v4.4.3-x64.msi",
+    "checkUp"      : "下载安装后确认环境变量path内有 ‘C:\Program Files\nodejs\;’ ",
+    "checkUp2"     : "打开CMD输入node --version确认能查看版本信息",
+    "checkUp3"     : "打开CMD输入npm -v 确认能查看版本信息",
+    "step2"        : "安装vue",
+    "detailed2"    : "打开CMD输入npm install -g vue",
+    "checkUP4"     : "打开CMD输入vue --version 确认能查看版本信息",
+    "step3"        : "更新代码,打开CMD并进入项目地址,(我的是 E:\script\Nahsor\app\static\project-testmanager);",
+    "step4"        : "CMD内输入npm run dev启动项目,默认端口为8080,如果要改端口可以在 project-testmanager/config/index.js 文件内搜索到8080然后更改成想改的端口"
+}
