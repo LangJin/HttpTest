@@ -5,7 +5,7 @@
 说明：处理接受命令行的命令
 '''
 import argparse
-import client
+from httptest import client
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '-v', '--version',  action='store_true',
