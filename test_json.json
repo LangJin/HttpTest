@@ -1,0 +1,17 @@
+{
+    "name": "teatname",
+    "request": {
+        "url": "http://127.0.0.1:2333/login",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "json": {
+            "username": "admin",
+            "password":"123456"
+        }
+    },
+    "validates": {
+        "Equal": ["resdata['status']", "201"]
+    }
+}
