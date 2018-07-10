@@ -1,0 +1,6 @@
+{
+        "request": "{url': 'http://127.0.0.1:2333/test', 'json': {'aaa': 'bbb'}, 'method': 'POST', 'headers': {'Content-Type': 'application/json'}, 'timeout': 10}",
+        "testname": "用例99",
+        "testtype": "testcass",
+        "validate": "[{'Equal': ['r.json()','request['json']']},{'Equal': ['r.status_code','200']}]"
+}

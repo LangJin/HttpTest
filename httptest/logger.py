@@ -1,42 +1,72 @@
 # -*- coding:utf-8 -*-
 '''
-作者：浪晋
-时间：2018-6-2
-说明：日志类
+作者：SNake
+时间：2018-7-10
+说明：处理接受命令行的命令
 '''
-import time
+
 import logging
 
 
 class Logger:
-    def __init__(self):
-        pass
+    def __init__(self, file="", clevel=logging.INFO, Flevel=logging.DEBUG):
+        # 设置CMD日志
+        fmt = logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s', '%Y-%m-%d %H:%M:%S')
+        self.sh = logging.StreamHandler()
+        self.sh.setFormatter(fmt)
+        self.sh.setLevel(clevel)
 
-    def __printconsole(self, level, message):
-        logger = logging.getLogger()
-        logger.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
-        ch.setFormatter(formatter)
-        logger.addHandler(ch)
-        if level == 'info':
-            logger.info(message)
-        elif level == 'debug':
-            logger.debug(message)
-        elif level == 'warning':
-            logger.warning(message)
-        elif level == 'error':
-            logger.error(message)
+        # 设置文件日志
+        if len(file) != 0:
+            open(file, 'w', encoding='utf-8').close()
+            # 设置日志文件路径/格式/日志级别
+            self.logger = logging.getLogger(file)
+            self.logger.setLevel(logging.DEBUG)
+            self.fh = logging.FileHandler(file, encoding='utf-8')
+            self.fh.setFormatter(fmt)
+            self.fh.setLevel(Flevel)
+            self.logger.addHandler(self.fh)
+
+        self.logger = logging.root.addHandler(self.sh)
+        self.logger.addHandler(self.sh)
 
     def debug(self, message):
-        self.__printconsole('debug', message)
+        self.logger.debug(message)
+        self.close()
 
     def info(self, message):
-        self.__printconsole('info', message)
+        self.logger.info(message)
+        self.close()
 
-    def warning(self, message):
-        self.__printconsole('warning', message)
+    def war(self, message):
+        self.logger.warning(message)
+        self.close()
 
     def error(self, message):
-        self.__printconsole('error', message)
+        self.logger.error(message)
+        self.close()
+
+    def cri(self, message):
+        self.logger.critical(message)
+        self.close()
+
+    def close(self):
+        try:
+            self.sh.close()
+            self.fh.close()
+        except:
+            pass
+
+
+def get_logger(file="", clevel=logging.INFO, Flevel=logging.DEBUG):
+    def gene_method():
+        logger = Logger(file=file, clevel=clevel, Flevel=Flevel)
+        return logger
+
+    return gene_method
+
+
+if __name__ == "__main__":
+    file="./log.log"
+    a = get_logger(file=file)()
+    print(a.logger.debug("12322"))

@@ -1,25 +1,47 @@
 # -*- coding:utf-8 -*-
 '''
-作者：浪晋
-时间：2018-6-2
+作者：SNake
+时间：2018-7-10
 说明：处理接受命令行的命令
 '''
-import argparse
-from httptest import client
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '-v', '--version',  action='store_true',
-    help="show version")
+# from httptest import client
+from logger import get_logger
+import sys, argparse
 
-parser.add_argument(
-    'testset_paths', nargs='*',
-    help="testset file path")
-args = parser.parse_args()
+def main():
+    parser = argparse.ArgumentParser()
+    # 版本号
+    parser.add_argument(
+        '-v', '--version', action='store_true',
+        help="Show the HttpTest version")
 
-if args.version:
-    print("version")
-    exit(0)
+    # 测试路径
+    parser.add_argument(
+        '-t', '--test_path', nargs='*',
+        help="Set the test_set file path")
 
-if args.testset_paths:
-    print(args.testset_paths)
-    client.run()
+    # 测试日志
+    parser.add_argument(
+        '-l', '--logger', action='store_true',
+        help="Set the log status")
+
+    args = parser.parse_args()
+
+    # 版本号
+    if args.version:
+        print("HttpTest v1.0\n(c) 2017-2018 HttpTest Team. All Rights Reserved.")
+        exit(0)
+    # 日志状态
+    if args.logger:
+        file = "./test.log"
+        log = get_logger(file=file)()
+        log.logger.debug("12322")
+
+    # 测试路径
+    if args.test_path:
+        print(args.test_path)
+        client.run()
+
+
+if __name__ == "__main__":
+    main()
