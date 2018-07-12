@@ -5,8 +5,8 @@
 说明：解析json为用例的各种方法
 '''
 import json
-from httptest.logger import Logger
-from httptest import exception
+import exception
+from logger import Logger
 logger = Logger()
 
 

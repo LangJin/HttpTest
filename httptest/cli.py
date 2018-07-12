@@ -4,9 +4,13 @@
 时间：2018-7-10
 说明：处理接受命令行的命令
 '''
-# from httptest import client
-from logger import get_logger
 import sys, argparse
+import client
+from logger import Logger
+
+
+LOG_FILE = "./test.log"
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -31,13 +35,14 @@ def main():
     if args.version:
         print("HttpTest v1.0\n(c) 2017-2018 HttpTest Team. All Rights Reserved.")
         exit(0)
-    # 日志状态
-    if args.logger:
-        file = "./test.log"
-        log = get_logger(file=file)()
-        log.logger.debug("12322")
 
-    # 测试路径
+    # 初始化日志
+    if args.logger:
+        logger = Logger(log_file=LOG_FILE)
+    else:
+        logger = Logger()
+
+    # todo 测试路径需要跟run入口对接
     if args.test_path:
         print(args.test_path)
         client.run()
