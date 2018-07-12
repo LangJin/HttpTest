@@ -21,6 +21,7 @@ LOG_LEVEL = {
 # 单例模式解决多线程和配置问题
 def _singleton(cls):
     instances = {}
+
     @wraps(cls)
     def getinstance(*args, **kw):
         if cls not in instances:
@@ -49,9 +50,9 @@ class Logger:
         fmt = logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s', '%Y-%m-%d %H:%M:%S')
         if log_file:
             file_handler = logging.FileHandler(filename=log_file, mode='a+', encoding="utf-8")  # 追加文件
-            file_handler.setLevel(LOG_LEVEL[log_level.lower()])     # 设置日志级别
-            file_handler.setFormatter(fmt)  # 设置格式
-            self.logger.addHandler(file_handler)    # 添加handle
+            file_handler.setLevel(LOG_LEVEL[log_level.lower()])                                 # 设置日志级别
+            file_handler.setFormatter(fmt)                                                      # 设置格式
+            self.logger.addHandler(file_handler)                                                # 添加handle
 
         # 终端handler
         console_handler = logging.StreamHandler()
