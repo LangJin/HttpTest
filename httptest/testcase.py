@@ -6,8 +6,7 @@
 '''
 import json
 import exception
-from logger import Logger
-logger = Logger()
+from logger import logger
 
 
 def _validate_some_items(items):
@@ -55,27 +54,9 @@ def import_json_file(filename):
 
 def validate_json_case(filename):
     """
-    检查json文件的内容
-    {
-            "name": "teatname",
-            "request": {
-                "url": "http://127.0.0.1/test",
-                "method": "POST",
-                "headers": {
-                    "Content-Type": "application/json"
-                },
-                "json": {
-                    "username": "admin",
-                    "password":"123456"
-                }
-            },
-            "extract": [
-                {"token": "$token"}
-                ],
-            "validate": [
-                {"eq": ["status_code", 200]}
-                ]
-    }
+    说明：校验json文件格式
+    :param filename : json文件的路径
+    :return True: 校验通过; Flase: 校验失败
     """
     valid_items = []
     try:
@@ -108,27 +89,35 @@ def validate_json_case(filename):
         name = json_obj["name"]
         if not _validate_some_items([(name, str)]):
             logger.error("【错误】: 测试用例的name模块校验异常，请检查该模块")
-            raise Exception
+            return False
 
         # extract
         extract = eval(json_obj["extract"])
         if not _validate_some_items([(extract, list, True)]):
             logger.error("【错误】: 测试用例的extract模块校验异常，请检查该模块")
-            raise Exception
+            return False
 
         # validate
-        validate = json_obj["validate"]
+        validate = eval(json_obj["validate"])
         if not _validate_some_items([(validate, list, True)]):
             logger.error("【错误】: 测试用例的validate模块校验异常，请检查该模块")
-            raise Exception
+            return False
 
-    except (Exception, exception.NotFoundCaseError, exception.ValidateError):
+    except (Exception, exception.NotFoundCaseError, exception.ValidateError) as e:
         logger.error("【错误】：校验测试用例时发生异常，测试用例校验不通过")
-        raise exception.ValidateError("【错误】：校验测试用例时发生异常，测试用例校验不通过")
+        return False
 
-    return json_obj
+    return True
+
+
+def har2case():
+    pass
+
+
+def postman2case():
+    pass
 
 
 if __name__ == "__main__":
-    file = "../test_json1.json"
+    file = "../test_json.json"
     print(validate_json_case(file))

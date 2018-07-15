@@ -4,7 +4,7 @@
 时间：2018-7-10
 说明：日志工具
 '''
-
+import ctypes
 import logging
 from functools import wraps
 
@@ -13,9 +13,21 @@ LOG_LEVEL = {
     "info":     logging.INFO,
     "debug":    logging.DEBUG,
     "error":    logging.ERROR,
-    "warning":  logging.WARNING,
-    "critical": logging.CRITICAL
+    "war":      logging.WARNING,
+    "cri":      logging.CRITICAL,
 }
+
+LOG_COLOR = {
+    "red":      0x04,
+    "white":    0x0007,
+    "yellow":   0x04 | 0x02,
+}
+
+
+# 设置控制台颜色
+def set_color(color, handle=ctypes.windll.kernel32.GetStdHandle(-11)):
+    bool = ctypes.windll.kernel32.SetConsoleTextAttribute(handle, color)
+    return bool
 
 
 # 单例模式解决多线程和配置问题
@@ -31,9 +43,7 @@ def _singleton(cls):
     return getinstance
 
 
-"""
-只需要初始化一次就行了
-"""
+# 在cli中初始化一次就行了
 @_singleton
 class Logger:
     def __init__(self, log_file=None, log_level="info"):
@@ -60,24 +70,31 @@ class Logger:
         console_handler.setFormatter(fmt)
         self.logger.addHandler(console_handler)
 
-    def debug(self, message):
-        self.logger.debug(message)
-
     def info(self, message):
         self.logger.info(message)
 
     def war(self, message):
+        set_color(LOG_COLOR["yellow"])
         self.logger.warning(message)
+        set_color(LOG_COLOR["white"])
 
     def error(self, message):
+        set_color(LOG_COLOR["red"])
         self.logger.error(message)
+        set_color(LOG_COLOR["yellow"])
 
     def cri(self, message):
+        set_color(LOG_COLOR["red"])
         self.logger.critical(message)
+        set_color(LOG_COLOR["white"])
 
+
+logger = Logger()
 
 if __name__ == "__main__":
-    Logger("").info("222")
-    Logger().debug("222222")
-    Logger("./log.log").info("123")
+    logger = Logger()
+    logger.info("222")
+    logger.war("123")
+    logger.error("123")
+    logger.cri("123")
 

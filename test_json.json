@@ -1,17 +1,6 @@
 {
-    "name": "teatname",
-    "request": {
-        "url": "http://127.0.0.1:2333/login",
-        "method": "POST",
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "json": {
-            "username": "admin",
-            "password":"123456"
-        }
-    },
-    "validates": {
-        "Equal": ["resdata['status']", "201"]
-    }
+        "request": "{'url': 'http://127.0.0.1:2333/test', 'json': {'aaa': 'bbb'}, 'method': 'POST', 'headers': {'Content-Type': 'application/json'}, 'timeout': 10}",
+        "name": "用例99",
+        "validate": "[{'Equal': [\"r.json()\",'request[\"json\"]']},{\"Equal\": [\"r.status_code\",\"200\"]}]",
+        "extract": "[{'token': '$token'}]"
 }
