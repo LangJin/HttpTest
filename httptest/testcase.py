@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 '''
-作者：浪晋
-时间：2018-6-2
+作者：SNake
+时间：2018-7-16
 说明：解析json为用例的各种方法
 '''
 import json
@@ -111,6 +111,14 @@ def validate_json_case(filename):
 
 
 def har2case():
+    """
+    har文件转为case
+    1. 获取har
+    2. 提取request并转为jsoncase的request
+    3. 返回
+    :return:
+    """
+
     pass
 
 
