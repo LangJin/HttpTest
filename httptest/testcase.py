@@ -122,10 +122,33 @@ def har2case():
     pass
 
 
-def postman2case():
-    pass
+def postman2case(filename):
+    """
+    postman v2.0脚本转为case
+    :return:
+    """
+
+    cases = []
+    try:
+        import json
+        # 读取json文件并生成json对象
+        with open(filename, 'r', encoding="utf-8") as f:
+            postman_items = json.load(f)
+
+        for item in postman_items["item"]:
+            print(item)
+            name = item["name"]
+
+
+    except Exception as e:
+        raise e
+    finally:
+        return cases
 
 
 if __name__ == "__main__":
-    file = "../test_json.json"
-    print(validate_json_case(file))
+    # file = "../test_json.json"
+    # print(validate_json_case(file))
+
+    file = "../httptest.postman_collection.json"
+    print(postman2case(file))

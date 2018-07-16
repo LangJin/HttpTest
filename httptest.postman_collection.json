@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "e5b0253a-7f50-4474-a17c-ed81206cad8b",
+		"name": "httptest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:2333/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"admin\", \"password\":\"123456\"}"
+				},
+				"url": "localhost:2333/login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:2333/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "http://localhost:2333/"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:2333/chicktoken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"token\":\"sjdh34gsalked23nlsakn45dudaj\"}"
+				},
+				"url": "http://localhost:2333/chicktoken"
+			},
+			"response": []
+		}
+	]
+}
