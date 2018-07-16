@@ -140,7 +140,6 @@ def postman2case(filename):
         case["extract"], case["validate"] = [], []      # extract和validate默认为空
 
         # 获取request的值
-        """req: request模块/ header=request/header/ """
         req = {}                                        # req: request的容器
         header = []                                     # header:request中的header模块容器
         request = item["request"]                       # request:json中的request模块数据
