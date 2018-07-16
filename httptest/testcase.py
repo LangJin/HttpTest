@@ -4,6 +4,7 @@
 时间：2018-7-16
 说明：解析json为用例的各种方法
 '''
+import io
 import json
 import exception
 from logger import logger
@@ -40,10 +41,11 @@ def _validate_some_items(items):
 
 
 def import_json_file(filename):
-    '''
-    filename = "test_*.json"
+    """
     说明：判断导入的json文件名/格式是否合法
-    '''
+    :param filename: "test_*.json"
+    :return: filename
+    """
     filetype = filename.split(".")
     if filetype[-1] == "json" and filename.startswith("test"):
         return filename
@@ -124,26 +126,38 @@ def har2case():
 
 def postman2case(filename):
     """
-    postman v2.0脚本转为case
-    :return:
+    postman v2.0 脚本转为 case
+    :param: filename:脚本的绝对目录
+    :return: 失败:[], 成功:[{case1}，{case2}...]
     """
+    test_cases = []
+    with io.open(filename, 'r', encoding="utf-8") as f:
+        postman_items = json.load(f)
 
-    cases = []
-    try:
-        import json
-        # 读取json文件并生成json对象
-        with open(filename, 'r', encoding="utf-8") as f:
-            postman_items = json.load(f)
+    for item in postman_items["item"]:
+        case = {}
+        case["name"] = item["name"]                     # name
+        case["extract"], case["validate"] = [], []      # extract和validate默认为空
 
-        for item in postman_items["item"]:
-            print(item)
-            name = item["name"]
+        # 获取request的值
+        """req: request模块/ header=request/header/ """
+        req = {}                                        # req: request的容器
+        header = []                                     # header:request中的header模块容器
+        request = item["request"]                       # request:json中的request模块数据
+        for h in request["header"]:                     # header 可能出现多个,需要用list循环封装 todo 这里需要跟核心代码对接测试，测试是否需要保留多个json
+            k, v = h["key"], h["value"]
+            header.append({k: v})
 
+        req["header"] = header                          # header
+        req["url"] = request["url"]                     # url
+        req["method"] = request["method"]               # method
+        req["json"] = request["body"].get("raw")        # json
 
-    except Exception as e:
-        raise e
-    finally:
-        return cases
+        case["request"] = str(req).replace("\"", "'")   # 将字符串中的" 替换为 ' ，避免格式化eval失败的问题
+        test_cases.append(case)                         # 将case添加到testcases中
+
+    return test_cases
+
 
 
 if __name__ == "__main__":
