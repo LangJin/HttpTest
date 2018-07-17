@@ -120,7 +120,6 @@ def har2case():
     3. 返回
     :return:
     """
-
     pass
 
 
@@ -156,7 +155,6 @@ def postman2case(filename):
         test_cases.append(case)                         # 将case添加到testcases中
 
     return test_cases
-
 
 
 if __name__ == "__main__":
