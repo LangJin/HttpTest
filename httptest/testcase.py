@@ -40,6 +40,19 @@ def _validate_some_items(items):
     return True
 
 
+def _get_json_str(file_name):
+    """
+    打开文件重构方法
+    :param file_name:
+    :return:
+    """
+    with io.open(file_name, 'r', encoding="utf-8") as f:
+        json_str = json.load(f)
+
+    return json_str
+
+
+
 def import_json_file(filename):
     """
     说明：判断导入的json文件名/格式是否合法
@@ -112,15 +125,37 @@ def validate_json_case(filename):
     return True
 
 
-def har2case():
+def har2case(filename):
     """
     har文件转为case
-    1. 获取har
-    2. 提取request并转为jsoncase的request
-    3. 返回
+    :param filename:
     :return:
     """
-    pass
+    test_cases = []
+    har_items = _get_json_str(filename)                 # 解析文件
+
+    # 一个har可能会有多个请求
+    for entry in har_items["log"]["entries"]:
+        case, req = {}, {}
+        case["name"] = ""                               # case/name
+        case["extract"], case["validate"] = [], []      # case/extract和case/validate默认为空
+
+        entry = entry["request"]                        # 获取har文件中的request模块
+        for k, v in entry["headers"]:
+            if "Content-Type" == k:
+                req["header"] = {k: v}                  # case/request/header
+
+        try:
+            req["json"] = entry["postData"].get("text") # case/request/json
+        except:
+            req["json"] = {}
+
+        req["url"] = entry["url"]                       # case/request/url
+        req["method"] = entry["method"]                 # case/request/method
+        case["request"] = str(req).replace("\"", "'")   # case/request
+        test_cases.append(case)
+
+    return test_cases
 
 
 def postman2case(filename):
@@ -130,26 +165,26 @@ def postman2case(filename):
     :return: 失败:[], 成功:[{case1}，{case2}...]
     """
     test_cases = []
-    with io.open(filename, 'r', encoding="utf-8") as f:
-        postman_items = json.load(f)
+    postman_items = _get_json_str(filename)
 
     for item in postman_items["item"]:
-        case = {}
-        case["name"] = item["name"]                     # name
-        case["extract"], case["validate"] = [], []      # extract和validate默认为空
+        req, case = {}, {}
+        case["name"] = item["name"]                     # case/name
+        case["extract"], case["validate"] = [], []      # case/extract和case/validate默认为空
 
         # 获取request的值
-        req = {}                                        # req: request的容器
-        header = []                                     # header:request中的header模块容器
         request = item["request"]                       # request:json中的request模块数据
-        for h in request["header"]:                     # header 可能出现多个,需要用list循环封装 todo 这里需要跟核心代码对接测试，测试是否需要保留多个json
-            k, v = h["key"], h["value"]
-            header.append({k: v})
+        for k, v in request["header"]:                  # case/request/header
+            if "Content-Type" == k:
+                req["header"] = {k: v}
 
-        req["header"] = header                          # header
-        req["url"] = request["url"]                     # url
-        req["method"] = request["method"]               # method
-        req["json"] = request["body"].get("raw")        # json
+        try:
+            req["json"] = request["body"]["raw"]        # case/request/json
+        except:
+            req["json"] = {}
+
+        req["url"] = request["url"]                     # case/request/url
+        req["method"] = request["method"]               # case/request/method
 
         case["request"] = str(req).replace("\"", "'")   # 将字符串中的" 替换为 ' ，避免格式化eval失败的问题
         test_cases.append(case)                         # 将case添加到testcases中
@@ -161,5 +196,8 @@ if __name__ == "__main__":
     # file = "../test_json.json"
     # print(validate_json_case(file))
 
-    file = "../httptest.postman_collection.json"
-    print(postman2case(file))
+    # file = "../httptest.postman_collection.json"
+    # print(postman2case(file))
+
+    file = "../har_test.har"
+    print(har2case(file))
