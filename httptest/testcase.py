@@ -146,7 +146,7 @@ def har2case(filename):
                 req["header"] = {k: v}                  # case/request/header
 
         try:
-            req["json"] = entry["postData"].get("text") # case/request/json
+            req["json"] = entry["postData"]["text"]     # case/request/json
         except:
             req["json"] = {}
 
