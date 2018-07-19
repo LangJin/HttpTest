@@ -81,7 +81,7 @@ class Logger:
     def error(self, message):
         set_color(LOG_COLOR["red"])
         self.logger.error(message)
-        set_color(LOG_COLOR["yellow"])
+        set_color(LOG_COLOR["white"])
 
     def cri(self, message):
         set_color(LOG_COLOR["red"])
