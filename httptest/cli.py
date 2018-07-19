@@ -38,7 +38,7 @@ def main():
 
     # 初始化日志
     if args.logger:
-        logger = Logger(log_file=LOG_FILE)
+        Logger(log_file=LOG_FILE)
 
     # todo 测试路径需要跟run入口对接
     if args.test_path:
