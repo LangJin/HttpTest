@@ -5,7 +5,7 @@
 说明：封装了requests的方法
 '''
 import requests
-from logger import Logger
+from httptest.logger import Logger
 # from exception import NotFoundMethodError
 requests.packages.urllib3.disable_warnings()
 logger = Logger()

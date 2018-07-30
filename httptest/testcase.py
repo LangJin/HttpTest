@@ -6,8 +6,8 @@
 '''
 import io
 import json
-import exception
-from logger import logger
+from httptest import exception
+from httptest.logger import logger
 
 
 def _validate_some_items(items):
@@ -82,7 +82,7 @@ def validate_json_case(filename):
         # 检查testcase项, 默认每个key是必填，如果不存在某个key时直接获取则会抛出异常
         t_request = eval(json_obj["request"])                           # testcase/request
         t_request_url = t_request["url"]                                # testcase/request/url
-        t_request_json = t_request["json"]                              # testcase/request/json
+        t_request_json = t_request["json"]                              # testcase/request/json  ？
         t_request_method = t_request["method"]                          # testcase/request/method
         t_request_headers = t_request["headers"]                        # testcase/request/headers
         t_request_headers_content = t_request_headers["Content-Type"]   # testcase/request/headers/content-type

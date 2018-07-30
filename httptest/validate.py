@@ -5,7 +5,7 @@
 说明：对预期结果和实际结果做校验
 '''
 
-from exception import ValidateError
+from httptest.exception import ValidateError
 
 def chick_validate(validatelist):
     '''

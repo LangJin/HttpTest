@@ -5,8 +5,8 @@
 说明：处理接受命令行的命令
 '''
 import sys, argparse
-import client
-from logger import Logger
+from httptest import client
+from httptest.logger import Logger
 
 
 LOG_FILE = "./test.log"
