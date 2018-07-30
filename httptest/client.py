@@ -28,11 +28,21 @@ class TestCass(unittest.TestCase):
         # response = httptest(request)
         # validatelist = resobj(response, validates)
         # chick_validate(validatelist)
+        print("???????????????????")
+
+
+class TestSuite():
+    pass
+
+
+class HttpTester():
+    def __init__(self):
+        pass
+    def run(self):
         pass
 
+# suite = unittest.TestSuite()
+# suite.addTest(TestCass())
 
-suite = unittest.TestSuite()
-suite.addTest(TestCass())
-
-runner = unittest.TextTestRunner()
-runner.run(suite)
+# runner = unittest.TextTestRunner()
+# runner.run(suite)

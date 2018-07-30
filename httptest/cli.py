@@ -43,8 +43,8 @@ def main():
     # todo 测试路径需要跟run入口对接
     if args.test_path:
         print(args.test_path)
-        client.run()
+        client.HttpTester().run()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
