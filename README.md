@@ -53,3 +53,4 @@ https://blog.csdn.net/lovefengruoqing/article/details/79284573
 https://ehlxr.me/2017/01/07/CentOS-7-%E5%AE%89%E8%A3%85-Python3%E3%80%81pip3/  
 6、安装nginx和uwgsi  
 https://blog.coding.net/blog/flask-centos  
+https://blog.csdn.net/qq_33366069/article/details/80765410
