@@ -38,3 +38,18 @@ tavern
 千山积雪，灯火如烟，便是人间炊烟”
 
     “情义恩重，良辰美景，都似昙花一现”
+
+
+
+1、获取密码  
+http://blog.51cto.com/professor/1783769  
+2、修改密码  
+https://blog.csdn.net/qq_33472557/article/details/77726094  
+3、修改root的host让外网可以连接  
+https://www.cnblogs.com/cnblogsfans/archive/2009/09/21/1570942.html  
+4、安装python3  
+https://blog.csdn.net/lovefengruoqing/article/details/79284573  
+5、安装pip3  
+https://ehlxr.me/2017/01/07/CentOS-7-%E5%AE%89%E8%A3%85-Python3%E3%80%81pip3/  
+6、安装nginx和uwgsi  
+https://blog.coding.net/blog/flask-centos  
